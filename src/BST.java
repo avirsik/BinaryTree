@@ -48,6 +48,30 @@ public class BST {
      */
     public boolean search(int val) {
         // TODO: Complete the search function
+        BSTNode current = root;
+        return recursiveSearch(val, current);
+    }
+
+    /**
+     * The recursive method that search calls
+     *
+     * @param val
+     * @param current
+     * @return
+     */
+    public boolean recursiveSearch(int val, BSTNode current) {
+        // If the current node is val, return true
+        if (val == current.getVal()) {
+            return true;
+        }
+        // If the val is less than the current, returns the left node
+        if (val < current.getVal()) {
+            return recursiveSearch(current.getLeft().getVal(), current.getLeft());
+        }
+        // If the val is greater than the current, returns the right node
+        if (val > current.getVal()) {
+            return recursiveSearch(current.getRight().getVal(), current.getRight());
+        }
         return false;
     }
 
@@ -56,7 +80,29 @@ public class BST {
      */
     public ArrayList<BSTNode> getInorder() {
         // TODO: Complete inorder traversal
-        return null;
+        // Create ArrayList and sets current at the root
+        ArrayList<BSTNode> arr = new ArrayList<BSTNode>();
+        BSTNode current = root;
+        recursiveInOrder(arr, current);
+        return arr;
+    }
+
+    /**
+     * Recursive inorder method
+     *
+     * @param arr
+     * @param current
+     */
+
+    public void recursiveInOrder(ArrayList<BSTNode> arr, BSTNode current) {
+        // Base case
+        if (current == null) {
+            return;
+        }
+        recursivePreOrder(arr, current.getLeft());
+        arr.add(current);
+        recursivePreOrder(arr, current.getRight());
+        return;
     }
 
     /**
@@ -64,7 +110,29 @@ public class BST {
      */
     public ArrayList<BSTNode> getPreorder() {
         // TODO: Complete preorder traversal
-        return null;
+        // Create ArrayList and sets current at the root
+        ArrayList<BSTNode> arr = new ArrayList<BSTNode>();
+        BSTNode current = root;
+        recursivePreOrder(arr, current);
+        return arr;
+    }
+
+    /**
+     * Recursive preorder method
+     *
+     * @param arr
+     * @param current
+     */
+
+    public void recursivePreOrder(ArrayList<BSTNode> arr, BSTNode current) {
+        // Base case
+        if (current == null) {
+            return;
+        }
+        arr.add(current);
+        recursivePreOrder(arr, current.getLeft());
+        recursivePreOrder(arr, current.getRight());
+        return;
     }
 
     /**
@@ -72,7 +140,29 @@ public class BST {
      */
     public ArrayList<BSTNode> getPostorder() {
         // TODO: Complete postorder traversal
-        return null;
+        // Create ArrayList and sets current at the root
+        ArrayList<BSTNode> arr = new ArrayList<BSTNode>();
+        BSTNode current = root;
+        recursivePostOrder(arr, current);
+        return arr;
+    }
+
+    /**
+     * Recursive postorder method
+     *
+     * @param arr
+     * @param current
+     */
+
+    public void recursivePostOrder(ArrayList<BSTNode> arr, BSTNode current) {
+        // Base case
+        if (current == null) {
+            return;
+        }
+        recursivePreOrder(arr, current.getLeft());
+        recursivePreOrder(arr, current.getRight());
+        arr.add(current);
+        return;
     }
 
     /**
@@ -83,6 +173,7 @@ public class BST {
      */
     public void insert(int val) {
         // TODO: Complete insert
+        BSTNode current = new BSTNode(val);
     }
 
     /**

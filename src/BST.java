@@ -61,16 +61,19 @@ public class BST {
      */
     public boolean recursiveSearch(int val, BSTNode current) {
         // If the current node is val, return true
+        if (current == null) {
+            return false;
+        }
         if (val == current.getVal()) {
             return true;
         }
         // If the val is less than the current, returns the left node
         if (val < current.getVal()) {
-            return recursiveSearch(current.getLeft().getVal(), current.getLeft());
+            return recursiveSearch(val, current.getLeft());
         }
         // If the val is greater than the current, returns the right node
         if (val > current.getVal()) {
-            return recursiveSearch(current.getRight().getVal(), current.getRight());
+            return recursiveSearch(val, current.getRight());
         }
         return false;
     }
@@ -99,9 +102,9 @@ public class BST {
         if (current == null) {
             return;
         }
-        recursivePreOrder(arr, current.getLeft());
+        recursiveInOrder(arr, current.getLeft());
         arr.add(current);
-        recursivePreOrder(arr, current.getRight());
+        recursiveInOrder(arr, current.getRight());
         return;
     }
 
@@ -159,8 +162,8 @@ public class BST {
         if (current == null) {
             return;
         }
-        recursivePreOrder(arr, current.getLeft());
-        recursivePreOrder(arr, current.getRight());
+        recursivePostOrder(arr, current.getLeft());
+        recursivePostOrder(arr, current.getRight());
         arr.add(current);
         return;
     }
@@ -169,11 +172,43 @@ public class BST {
      * Inserts the given integer value to the tree
      * if it does not already exist. Modifies the
      * root instance variable to be the root of the new modified tree.
-     * @param val The value ot insert
+     * @param val The value to insert
      */
     public void insert(int val) {
         // TODO: Complete insert
-        BSTNode current = new BSTNode(val);
+        BSTNode node = new BSTNode(val);
+        BSTNode current = root;
+        recursionInsertion(node.getVal(), current);
+    }
+
+    public BSTNode recursionInsertion(int val, BSTNode current) {
+        BSTNode newNode = new BSTNode(val);
+        // If there is already a node with the value val, don't change anything and return
+        if (search(val)) {
+            return ;
+        }
+        // If the new node is smaller than the current node, it should be placed to its left
+        if (val < current.getVal()) {
+            // If the current node's children are null then it will be in the right spot
+            if (current.getLeft() == null) {
+                current.setLeft(newNode);
+            }
+            // If current's children contain nodes, continue the process with that node as the current
+            else {
+                recursionInsertion(val, current.getLeft());
+            }
+        }
+        // If the new node is greater than the current node, it should be placed to its right
+        if (val > current.getVal()) {
+            // If the current node's children are null then it will be in the right spot
+            if (current.getRight() == null) {
+                current.setRight(newNode);
+            }
+            // If current's children contain nodes, continue the process with that node as the current
+            else {
+                recursionInsertion(val, current.getRight());
+            }
+        }
     }
 
     /**
@@ -209,7 +244,6 @@ public class BST {
         sol = tree.getPostorder();
         printNodes(sol);
 
-        tree.insert(8);
         System.out.println("\nInorder traversal of binary tree is");
         sol = tree.getInorder();
         printNodes(sol);

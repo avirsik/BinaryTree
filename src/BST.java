@@ -2,8 +2,8 @@ import java.util.ArrayList;
 
 /**
  * An Integer Binary Search Tree
- * @author: Your Name Here
- * @version: Date
+ * @author: Annie Virsik
+ * @version: 4/12/24
  */
 
 public class BST {
@@ -48,6 +48,7 @@ public class BST {
      */
     public boolean search(int val) {
         // TODO: Complete the search function
+        // Creates a node which is set as the root and calls the recursiveSearch method
         BSTNode current = root;
         return recursiveSearch(val, current);
     }
@@ -60,10 +61,11 @@ public class BST {
      * @return
      */
     public boolean recursiveSearch(int val, BSTNode current) {
-        // If the current node is val, return true
+        // If current is empty return false
         if (current == null) {
             return false;
         }
+        // If the current node is val, return true
         if (val == current.getVal()) {
             return true;
         }
@@ -83,9 +85,10 @@ public class BST {
      */
     public ArrayList<BSTNode> getInorder() {
         // TODO: Complete inorder traversal
-        // Create ArrayList and sets current at the root
+        // Creates ArrayList and sets current to the root
         ArrayList<BSTNode> arr = new ArrayList<BSTNode>();
         BSTNode current = root;
+        // Calls recursiveInOrder method and returns the modified ArrayList
         recursiveInOrder(arr, current);
         return arr;
     }
@@ -98,10 +101,11 @@ public class BST {
      */
 
     public void recursiveInOrder(ArrayList<BSTNode> arr, BSTNode current) {
-        // Base case
+        // If current is empty, return
         if (current == null) {
             return;
         }
+        // Recursive call to left node, adding current, and right node
         recursiveInOrder(arr, current.getLeft());
         arr.add(current);
         recursiveInOrder(arr, current.getRight());
@@ -116,6 +120,7 @@ public class BST {
         // Create ArrayList and sets current at the root
         ArrayList<BSTNode> arr = new ArrayList<BSTNode>();
         BSTNode current = root;
+        // Calls recursiveInOrder method and returns the modified ArrayList
         recursivePreOrder(arr, current);
         return arr;
     }
@@ -128,10 +133,11 @@ public class BST {
      */
 
     public void recursivePreOrder(ArrayList<BSTNode> arr, BSTNode current) {
-        // Base case
+        // If current is empty, return
         if (current == null) {
             return;
         }
+        // Adds current, recursive call to left and right nodes
         arr.add(current);
         recursivePreOrder(arr, current.getLeft());
         recursivePreOrder(arr, current.getRight());
@@ -146,6 +152,7 @@ public class BST {
         // Create ArrayList and sets current at the root
         ArrayList<BSTNode> arr = new ArrayList<BSTNode>();
         BSTNode current = root;
+        // Calls recursiveInOrder method and returns the modified ArrayList
         recursivePostOrder(arr, current);
         return arr;
     }
@@ -158,10 +165,11 @@ public class BST {
      */
 
     public void recursivePostOrder(ArrayList<BSTNode> arr, BSTNode current) {
-        // Base case
+        // If current node is empty, return
         if (current == null) {
             return;
         }
+        // Recursive call to left and right nodes, then adds current to the array
         recursivePostOrder(arr, current.getLeft());
         recursivePostOrder(arr, current.getRight());
         arr.add(current);
@@ -176,16 +184,18 @@ public class BST {
      */
     public void insert(int val) {
         // TODO: Complete insert
+        // Creates a node with val and creates a current node that is the root
         BSTNode node = new BSTNode(val);
         BSTNode current = root;
+        // Recursive call to recursionInsertion
         recursionInsertion(node.getVal(), current);
     }
 
-    public BSTNode recursionInsertion(int val, BSTNode current) {
+    public void recursionInsertion(int val, BSTNode current) {
         BSTNode newNode = new BSTNode(val);
-        // If there is already a node with the value val, don't change anything and return
+        // If there is already a node with the value val, don't change anything
         if (search(val)) {
-            return ;
+            return;
         }
         // If the new node is smaller than the current node, it should be placed to its left
         if (val < current.getVal()) {
